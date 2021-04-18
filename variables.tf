@@ -1,11 +1,11 @@
 # Variáveis de acesso AWS
 variable "access_key-iam_wilson" {
     type = string
-    default = "AKIAWJETW6TU7D6SZNF4"
+    default = "********************"
 }
 variable "secret_key-iam_wilson" {
     type = string
-    default = "wSRRpQgHxvNB7h8oeaAcFhbaMPzyBZjxwmRPAXsJ"
+    default = "****************************************"
 }
 
 # ========================================================================================== #
