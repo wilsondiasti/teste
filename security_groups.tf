@@ -19,7 +19,28 @@ resource "aws_security_group" "acesso-admin" {
       Name = "acesso-admin"
   }
 }
-
+# ========================================================================================================= #
+resource "aws_security_group" "lbpublic" {
+    name        = "lbpublic"
+    description = "Liberando acesso para o LB publico"
+    vpc_id      = aws_vpc.vpc-desafio.id
+    ingress {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    egress {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+      Name = "lbpublic"
+  }
+}
+# ========================================================================================================= #
 resource "aws_security_group" "acesso_front" {
   name        = "acesso_front"
   description = "Liberando acesso para o frontend"
@@ -28,6 +49,12 @@ resource "aws_security_group" "acesso_front" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
+    cidr_blocks = [aws_subnet.subnet-privada_front.cidr_block, aws_subnet.Public_subnet.cidr_block]
+  }
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
     cidr_blocks = [aws_subnet.subnet-privada_front.cidr_block, aws_subnet.Public_subnet.cidr_block]
   }
   ingress {
@@ -46,7 +73,7 @@ resource "aws_security_group" "acesso_front" {
     Name = "acesso_front"
   }
 }
-
+# ========================================================================================================= #
 resource "aws_security_group" "acesso_back" {
   name        = "acesso_back"
   description = "Liberando acesso para o backend"
@@ -55,6 +82,12 @@ resource "aws_security_group" "acesso_back" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
+    cidr_blocks = [aws_subnet.subnet-privada_back.cidr_block, aws_subnet.Public_subnet.cidr_block]
+  }
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
     cidr_blocks = [aws_subnet.subnet-privada_back.cidr_block, aws_subnet.Public_subnet.cidr_block]
   }
   ingress {
@@ -79,7 +112,7 @@ resource "aws_security_group" "acesso_back" {
     Name = "acesso_back"
   }
 }
-
+# ========================================================================================================= #
 resource "aws_security_group" "acesso_db" {
   name        = "acesso_db"
   description = "Liberando acesso para o DB"
@@ -98,5 +131,26 @@ resource "aws_security_group" "acesso_db" {
   }
   tags = {
     Name = "acesso_db"
+  }
+}
+# ========================================================================================================= #
+resource "aws_security_group" "lbinterno" {
+    name        = "lbinterno"
+    description = "Liberando acesso para o LB interno"
+    vpc_id      = aws_vpc.vpc-desafio.id
+    ingress {
+      from_port   = 8080
+      to_port     = 8080
+      protocol    = "tcp"
+      cidr_blocks = [ aws_subnet.subnet-privada_back.cidr_block ]
+    }
+    egress {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
+    tags = {
+      Name = "lbinterno"
   }
 }

@@ -8,8 +8,7 @@ variable "secret_key-iam_wilson" {
     default = "wSRRpQgHxvNB7h8oeaAcFhbaMPzyBZjxwmRPAXsJ"
 }
 
-# ========================================================== #
-
+# ========================================================================================== #
 # Demais variáveis
 variable "region" {
      default = "us-east-1"
@@ -35,9 +34,6 @@ variable "vpcCIDRblock" {
 variable "publicsCIDRblock" {
     default = "1.2.3.0/24"
 }
-variable "publicsCIDRblockpublic2" {
-    default = "1.2.8.0/24"
-}
 variable "privatesCIDRblock_front" {
     default = "1.2.4.0/24"
 }
@@ -46,6 +42,15 @@ variable "privatesCIDRblock_back" {
 }
 variable "privatesCIDRblock_db" {
     default = "1.2.6.0/24"
+}
+variable "privatesCIDRblock_db2" {
+    default = "1.2.7.0/24"
+}
+variable "publicsCIDRblockpublic2" {
+    default = "1.2.8.0/24"
+}
+variable "privatesCIDRblock_back2" {
+    default = "1.2.9.0/24"
 }
 variable "publicdestCIDRblock" {
     default = "0.0.0.0/0"
@@ -63,4 +68,10 @@ variable "ingressCIDRblock" {
 variable "egressCIDRblock" {
     type = list
     default = [ "0.0.0.0/0" ]
+}
+variable "ipfront" {
+    default = "1.2.4.20"
+}
+variable "ipbackend" {
+    default = "1.2.5.20"
 }

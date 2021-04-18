@@ -8,7 +8,7 @@ resource "aws_vpc" "vpc-desafio" {
     Name = "vpc-desafio"
   }
 }
-
+# =============================================================== #
 # Configurando Subnet Pública
 resource "aws_subnet" "Public_subnet" {
   vpc_id                  = aws_vpc.vpc-desafio.id
@@ -28,7 +28,7 @@ resource "aws_subnet" "Public_subnet2" {
    Name = "subnet-publica2"
   }
 }
-
+# =============================================================== #
 # Configurando Internet Gateway
 resource "aws_internet_gateway" "IGW" {
   vpc_id = aws_vpc.vpc-desafio.id
@@ -36,7 +36,7 @@ resource "aws_internet_gateway" "IGW" {
       Name = "IGW"
   }
 }
-
+# =============================================================== #
 # Configurando Tabela de Roteamento
 resource "aws_route_table" "rtb_publico" {
   vpc_id = aws_vpc.vpc-desafio.id
@@ -44,33 +44,37 @@ resource "aws_route_table" "rtb_publico" {
       Name = "rtb_publico"
   }
 }
-
+# =============================================================== #
 # Configurando Roteador
 resource "aws_route" "internet_access" {
   route_table_id         = aws_route_table.rtb_publico.id
   destination_cidr_block = var.publicdestCIDRblock
   gateway_id             = aws_internet_gateway.IGW.id
 }
-
+# =============================================================== #
 # Configurando associação à tabela de roteamento
 resource "aws_route_table_association" "Public_association" {
   subnet_id      = aws_subnet.Public_subnet.id
   route_table_id = aws_route_table.rtb_publico.id
 }
-
+resource "aws_route_table_association" "Public_association2" {
+  subnet_id      = aws_subnet.Public_subnet2.id
+  route_table_id = aws_route_table.rtb_publico.id
+}
+# =============================================================== #
 # Configurando IP Externo para o IGW
 resource "aws_eip" "ipwan" {
   	depends_on = [aws_internet_gateway.IGW]
   	vpc        = true
 }
-
+# =============================================================== #
 # Configurando NAT
 resource "aws_nat_gateway" "GW" {
   allocation_id = aws_eip.ipwan.id
   subnet_id     = aws_subnet.Public_subnet.id
   depends_on    = [aws_internet_gateway.IGW]
 }
-# ======================================================================== #
+# =============================================================== #
 # Configurando Subnet do Frontend
 resource "aws_route_table" "rtb_priv_front" {
   vpc_id = aws_vpc.vpc-desafio.id
@@ -79,9 +83,10 @@ resource "aws_route_table" "rtb_priv_front" {
   }
 }
 resource "aws_subnet" "subnet-privada_front" {
-  vpc_id     = aws_vpc.vpc-desafio.id
-  cidr_block = var.privatesCIDRblock_front
-  tags       = {
+  vpc_id            = aws_vpc.vpc-desafio.id
+  cidr_block        = var.privatesCIDRblock_front
+  availability_zone = var.availabilityZone
+  tags              = {
       Name = "subnet-privada_front"
   }
 }
@@ -91,12 +96,11 @@ resource "aws_route_table_association" "private1" {
 }
 resource "aws_route" "router-front" {
   route_table_id         = aws_route_table.rtb_priv_front.id
-  destination_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = var.publicdestCIDRblock
   nat_gateway_id         = aws_nat_gateway.GW.id
   depends_on             = [aws_nat_gateway.GW]
 }
-
-# ======================================================================== #
+# ========================================================================================== #
 # Configurando Subnet do Backend
 resource "aws_route_table" "rtb_priv_back" {
   vpc_id = aws_vpc.vpc-desafio.id
@@ -104,42 +108,46 @@ resource "aws_route_table" "rtb_priv_back" {
       Name = "rtb_priv_back"
   }
 }
-
 resource "aws_subnet" "subnet-privada_back" {
-  vpc_id     = aws_vpc.vpc-desafio.id
-  cidr_block = var.privatesCIDRblock_back
+  vpc_id            = aws_vpc.vpc-desafio.id
+  cidr_block        = var.privatesCIDRblock_back
+  availability_zone = var.availabilityZone
   tags       = {
       Name = "subnet-privada_back"
   }
 }
-
+resource "aws_subnet" "subnet-privada_back2" {
+  vpc_id            = aws_vpc.vpc-desafio.id
+  cidr_block        = var.privatesCIDRblock_back2
+  availability_zone = var.availabilityZone2
+  tags       = {
+      Name = "subnet-privada_back2"
+  }
+}
 resource "aws_route_table_association" "private2" {
   subnet_id      = aws_subnet.subnet-privada_back.id
   route_table_id = aws_route_table.rtb_priv_back.id
 }
-
 resource "aws_route" "router-back" {
   route_table_id         = aws_route_table.rtb_priv_back.id
-  destination_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = var.publicdestCIDRblock
   nat_gateway_id         = aws_nat_gateway.GW.id
   depends_on             = [aws_nat_gateway.GW]
 }
-
-# ======================================================================== #
-
+# ========================================================================================== #
 # Configurando Subnet do DB
 resource "aws_subnet" "subnet-privada_db" {
-  vpc_id     = aws_vpc.vpc-desafio.id
-  cidr_block = var.privatesCIDRblock_db
-  availability_zone = "us-east-1a"
+  vpc_id            = aws_vpc.vpc-desafio.id
+  cidr_block        = var.privatesCIDRblock_db
+  availability_zone = var.availabilityZone
   tags = {
     Name = "subnet-privada_db"
   }
 }
 resource "aws_subnet" "subnet-privada_db2" {
-  vpc_id     = aws_vpc.vpc-desafio.id
-  cidr_block = "1.2.7.0/24"
-  availability_zone = "us-east-1b"
+  vpc_id            = aws_vpc.vpc-desafio.id
+  cidr_block        = var.privatesCIDRblock_db2
+  availability_zone = var.availabilityZone2
   tags = {
     Name = "subnet-privada_db2"
   }
