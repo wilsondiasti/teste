@@ -32,31 +32,31 @@ resource "aws_instance" "bastion" {
                 touch /home/ec2-user/.ssh/chave.pem
                 cat >> /home/ec2-user/.ssh/chave.pem <<EOL
 -----BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEAl1KYcMBtTbWHrgNTLXK/MtGuHdn4+lBV9ofxdQ9hRXof2WRU
-t43zy5F2xU+UmQIlUIunjHFixc5ZAtIXsZWZWfXC5unJk1ByvLsL5Vml1UttXBB7
-4AtVqE2fqCyUV2r18QzqyS/EJBWYkAqnUfuJyo+M8j8bAuMPqu5Fx6i9OxgS0VyW
-L/CCMLt6kNboP5NUYWMPI7YwdPXLfgtJl8XjtpyPDdi8qi/9qW1CYnHk9QVvPO30
-AbnbzS4Nz6PkpQip9OynRpL2VaRHj6ydgbKSe0qpw79ILey7cHtjK8rZyTOVrDFz
-EhDwzMK+EK69zPRYRjn2+CCWtvksxMsBgXatywIDAQABAoIBAD0wnA3z8f8bacsW
-8xqMrP4axeKyUri9pZU0MZJZbscOdDSPGqbC0xO9NZ7h6D/bG0Wvw0fKTduY7mty
-kzwvNzymYXLIlMdqH4trw4qxrppKjuVMkRru2mtdQDNcG3wh92PLCmHiW9kPloqg
-lDpVkcmENMV8eSq4sIw5H6R1+lcbbEtWd+N1vCyeVVe2245dVLJAbTZvbfKjiulX
-QC2zWL7lO5N4SRFhPBgM8CaMVFUmI/+shS5hu+svKpSe3Mr2PbWgE6GdEIZj7EHD
-jHsn18MbeETho2lBIufCpO1fSg0PsXedT1OfPqQAGmcnJRfmvY/2kHLodWJ0wiAZ
-p3GVWlkCgYEA1QYAr0O7c7UDBDmnpm5CftIyEl/iIodQ1sfgoqqzcoCNnQ1Azpa/
-FAs9rAiwjO9ADPa0mwvfk86v5psTWHFNc/aHJ9dQObmsT+7o8uJYekvZSs1+R3R1
-81g4nAxu8BtNDjLhNVTJL+LTya/2wxibR//Cd6u28y3QzrAurao0UC8CgYEAtdnw
-MNKNzAdU8fgNBPeSDGJKWZ5LAQ0D7YaR9fvsj55ZHD+Y8GhAyCSpoUV5aCjo2qFV
-DccFkJl8o4ghDrXmTrIYFvH7oMi1oDBGfVvG6lHvv89Qt4Mj9IMzmGWYSyBJhRg0
-F6uAFpYJ5vKqoHXPgpq4XrN3cK03lghdJ8n1mSUCgYEAoMhUEfUEcfPIoBLIKAUG
-qWQLKPU34CnT6RiZww0mPiErQcO0C3maJQ3K8aLpZqZZ6K74aCIRESWqfFrFwjZa
-aFFFd9u6kKdEmFxRdKlEcKH5Es2BJ3uOXypSJ+32ecGRaksa0j75TuxcP9lRXbWf
-1jsDU4HGp0sIVEiEIs3ZiD8CgYApZ8gCtc5HaFv1BC+is+PzIeYf5aTaRmZgjMVr
-JsNEKB/OCMT/6Bzn9UESUUlFaBssvJMrIeeoduokKfis6snXnUFS6CINB+Yi5RsH
-q//sll9qYv/T6O4k3ELBLlCwuldDELG7ufbeLadviE1FX82xxRy5o09MvoPri1f6
-mUdsaQKBgEejzHmvubIPCX/EzxdOv0WRHswbhW8ZaB+g5Jwjj8Ip+zqjPdpzFBbu
-ukP1m/edK1CBrauBlkOR/m4bWvpW2odTwAf1HoFFclNGwI1xcAuwOrjYfMPvorhK
-WWjP0muMbk70iGYPlrQTK/x/A9qu48i6bxLNlpY8QOfOHQCUyHQw
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
 -----END RSA PRIVATE KEY-----
                 EOL
                 chmod 400 /home/ec2-user/.ssh/chave.pem
@@ -93,8 +93,8 @@ resource "aws_instance" "srv-frontend" {
                 sudo -u ec2-user mkdir /home/ec2-user/.aws
                 sudo -u ec2-user touch /home/ec2-user/.aws/credentials
                 sudo -u ec2-user echo "[default]" >> /home/ec2-user/.aws/credentials
-                sudo -u ec2-user echo "aws_access_key_id = AKIAWJETW6TU7D6SZNF4" >> /home/ec2-user/.aws/credentials
-                sudo -u ec2-user echo "aws_secret_access_key = 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" >> /home/ec2-user/.aws/credentials
+                sudo -u ec2-user echo "aws_access_key_id = ***********" >> /home/ec2-user/.aws/credentials
+                sudo -u ec2-user echo "aws_secret_access_key = ********************" >> /home/ec2-user/.aws/credentials
                 sudo -u ec2-user touch /home/ec2-user/.aws/config
                 sudo -u ec2-user echo "[default]" >> /home/ec2-user/.aws/config
                 sudo -u ec2-user echo "region = us-east-1" >> /home/ec2-user/.aws/config
